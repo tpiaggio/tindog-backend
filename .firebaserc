@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "tindog-4edd4"
+  },
+  "targets": {},
+  "etags": {
+    "tindog-4edd4": {
+      "extensionInstances": {
+        "storage-resize-images": "ca35ca0d61d22d0dc1c4046564001b225f87d67ffe38a254b0ba0c7b140817ae"
+      }
+    }
+  },
+  "dataconnectEmulatorConfig": {}
+}
