@@ -1,7 +1,5 @@
 # Tindog Backend
 
-[![Tindog][logo]]
-
 [![License: MIT][license_badge]][license_link]
 
 Backend project for Tindog, built with [Firebase][firebase_link] using [Genkit][genkit_link] for [Fluttercon Europe][fluttercon_link].
@@ -87,5 +85,4 @@ npm run test-rules-emulators
 [fluttercon_link]: https://fluttercon.dev/
 [license_badge]: https://img.shields.io/badge/license-MIT-blue.svg
 [license_link]: https://opensource.org/licenses/MIT
-[logo]: assets/tindog_logo.jpg
-[tindog_frontend_repo]: https://github.com/tpiaggio/tindog_backend
+[tindog_frontend_repo]: https://github.com/3ettilina/tindog
