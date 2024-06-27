@@ -1,14 +1,13 @@
 import {configureGenkit} from "@genkit-ai/core";
 import {googleAI} from "@genkit-ai/googleai";
 import {firebase} from "@genkit-ai/firebase";
-import {defineSecret, defineString} from "firebase-functions/params";
+import {defineSecret} from "firebase-functions/params";
 import {initializeApp, getApps} from "firebase-admin/app";
 import dogDataFlow from "./flows/dogDataFlow";
 import matchDogs from "./callables/matchDogs";
 import onMessageCreated from "./triggers/onMessageCreated";
 
 defineSecret("GOOGLE_GENAI_API_KEY");
-defineString("STORAGE_BUCKET");
 
 if (getApps().length === 0) {
   initializeApp({

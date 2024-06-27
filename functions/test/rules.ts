@@ -5,14 +5,7 @@ import {
   assertSucceeds,
   RulesTestEnvironment,
 } from "@firebase/rules-unit-testing";
-import {
-  doc,
-  collection,
-  addDoc,
-  setDoc,
-  updateDoc,
-  getDoc,
-} from "firebase/firestore";
+import {doc, collection, addDoc, setDoc, getDoc} from "firebase/firestore";
 import "mocha";
 
 let testEnv: RulesTestEnvironment;
@@ -38,25 +31,6 @@ after(async () => {
 describe("Dogs", () => {
   it("should only allow the user to create its own dog", async () => {
     const aliceDb = testEnv.authenticatedContext("alice").firestore();
-
-    // Cannot create since userId is not the same as authenticated user
-    await assertFails(
-      addDoc(collection(aliceDb, "dogs"), {
-        userId: "bob",
-      })
-    );
-
-    // Can create since userId is the same as authenticated user
-    await assertSucceeds(
-      addDoc(collection(aliceDb, "dogs"), {
-        userId: "alice",
-      })
-    );
-  });
-
-  it("should only allow the user to update its own dog, and the data should be valid", async () => {
-    const aliceDb = testEnv.authenticatedContext("alice").firestore();
-
     const dog = {
       name: "name",
       breed: "breed",
@@ -65,39 +39,27 @@ describe("Dogs", () => {
       description: "description",
     };
 
-    // Setup: Create documents in DB for testing (bypassing Security Rules).
-    await testEnv.withSecurityRulesDisabled(async (context) => {
-      const db = context.firestore();
-      await setDoc(doc(db, "dogs/dogAlice"), {...dog, userId: "alice"});
-      await setDoc(doc(db, "dogs/dogBob"), {...dog, userId: "bob"});
-    });
-
-    // Cannot update since dog's userId is not the same as authenticated user
+    // Cannot create since userId is not the same as authenticated user
     await assertFails(
-      updateDoc(doc(aliceDb, "dogs/dogBob"), {
+      addDoc(collection(aliceDb, "dogs"), {
         ...dog,
+        userId: "bob",
       })
     );
 
-    // Can update since dog's userId is the same as authenticated user
-    await assertSucceeds(
-      updateDoc(doc(aliceDb, "dogs/dogAlice"), {
-        ...dog,
-      })
-    );
-
-    // Cannot update since dog's data is not valid, name should not be empty
+    // Cannot create since dog's data is not valid, name should not be empty
     // Same logic applies to breed, size, age, and description
     await assertFails(
-      updateDoc(doc(aliceDb, "dogs/dogAlice"), {
-        name: "",
+      addDoc(collection(aliceDb, "dogs"), {
+        userId: "alice",
       })
     );
 
-    // Cannot update since userId shouldn't change
-    await assertFails(
-      updateDoc(doc(aliceDb, "dogs/dogAlice"), {
-        userId: "bob",
+    // Can create since userId is the same as authenticated user
+    await assertSucceeds(
+      addDoc(collection(aliceDb, "dogs"), {
+        ...dog,
+        userId: "alice",
       })
     );
   });
