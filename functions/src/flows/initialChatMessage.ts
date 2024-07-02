@@ -2,7 +2,7 @@ import {generate} from "@genkit-ai/ai";
 import {defineFlow} from "@genkit-ai/flow";
 import {gemini15Flash} from "@genkit-ai/googleai";
 import * as z from "zod";
-import {DogSchema} from "./schemas";
+import DogSchema from "../schemas/dogSchema";
 
 const initialChatMessage = defineFlow(
   {

@@ -1,9 +1,9 @@
 import {runFlow} from "@genkit-ai/flow";
 import {getFirestore} from "firebase-admin/firestore";
 import {onCall, HttpsError} from "firebase-functions/v2/https";
-import {DogSchema} from "../flows/schemas";
+import DogSchema from "../schemas/dogSchema";
 import initialChatMessage from "../flows/initialChatMessage";
-import getThumbnailUrl from "../utils/getThumbnailUrl";
+import {getThumbnailUrl} from "../utils/thumbnail";
 
 const matchDogs = onCall(async (request) => {
   // Check if user is authenticated

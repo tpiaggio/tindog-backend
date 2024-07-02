@@ -6,7 +6,14 @@ import {gemini15Flash} from "@genkit-ai/googleai";
 import * as z from "zod";
 import {getStorage, getDownloadURL} from "firebase-admin/storage";
 import {logger} from "firebase-functions/v2";
-import {DogSchema} from "./schemas";
+import DogSchema from "../schemas/dogSchema";
+import {getThumbnailPath} from "../utils/thumbnail";
+
+const deleteFiles = (filePath: string) => {
+  const fileRef = getStorage().bucket().file(filePath);
+  const thumbnailRef = getStorage().bucket().file(getThumbnailPath(filePath));
+  return Promise.allSettled([fileRef.delete(), thumbnailRef.delete()]);
+};
 
 const dogDataFlow = onFlow(
   {
@@ -17,8 +24,8 @@ const dogDataFlow = onFlow(
     }),
     outputSchema: DogSchema,
     authPolicy: firebaseAuth((user) => {
-      if (!user.email_verified) {
-        throw new Error("Verified email required to run flow");
+      if (!user) {
+        throw new Error("Authenticated user required to run flow");
       }
     }),
   },
@@ -59,10 +66,16 @@ const dogDataFlow = onFlow(
       });
       const output = response.output();
 
-      return output || {isDog: false};
+      if (!output || !output.isDog) {
+        // Delete the image files if they're not needed anymore
+        // await deleteFiles(filePath);
+        return {isDog: false};
+      }
+
+      return output;
     } catch (error) {
       console.log(error);
-      // TODO: Delete the file if it's not needed anymore
+      await deleteFiles(filePath);
       logger.error("Error generating dog data", error);
       return {
         isDog: false,
