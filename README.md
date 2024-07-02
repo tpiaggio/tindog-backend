@@ -24,6 +24,12 @@ One important step is to set the `GOOGLE_GENAI_API_KEY` environment variable to 
 export GOOGLE_GENAI_API_KEY=<your API key>
 ```
 
+If you plan on running Genkit locally, set the `GOOGLE_GENAI_API_KEY` secret in Firebase:
+
+```sh
+firebase functions:secrets:set GOOGLE_GENAI_API_KEY
+```
+
 After installin Genkit, we deploy our backend to Firebase using the following command:
 
 ```sh
