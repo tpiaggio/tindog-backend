@@ -28,6 +28,7 @@ export default onDocumentCreated(
           ...createdValue,
           read: false,
         },
+        updatedAt: new Date(),
       });
   }
 );

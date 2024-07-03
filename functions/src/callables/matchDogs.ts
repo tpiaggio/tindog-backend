@@ -88,6 +88,7 @@ const matchDogs = onCall(async (request) => {
       text: initialMessage,
       timestamp: new Date(),
     },
+    updatedAt: new Date(),
   });
   return {
     success: true,
