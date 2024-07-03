@@ -5,7 +5,14 @@ import {
   assertSucceeds,
   RulesTestEnvironment,
 } from "@firebase/rules-unit-testing";
-import {doc, collection, addDoc, setDoc, getDoc} from "firebase/firestore";
+import {
+  doc,
+  collection,
+  addDoc,
+  setDoc,
+  getDoc,
+  updateDoc,
+} from "firebase/firestore";
 import "mocha";
 
 let testEnv: RulesTestEnvironment;
@@ -47,8 +54,7 @@ describe("Dogs", () => {
       })
     );
 
-    // Cannot create since dog's data is not valid, name should not be empty
-    // Same logic applies to breed, size, age, and description
+    // Cannot create since dog's data is not valid, empty fields
     await assertFails(
       addDoc(collection(aliceDb, "dogs"), {
         userId: "alice",
@@ -58,6 +64,32 @@ describe("Dogs", () => {
     // Can create since userId is the same as authenticated user
     await assertSucceeds(
       addDoc(collection(aliceDb, "dogs"), {
+        ...dog,
+        userId: "alice",
+      })
+    );
+
+    // Setup: Create dog in DB for testing (bypassing Security Rules).
+    await testEnv.withSecurityRulesDisabled(async (context) => {
+      const db = context.firestore();
+      await setDoc(doc(db, "dogs/dog"), {
+        ...dog,
+        userId: "alice",
+      });
+    });
+
+    // Cannot update since dog's data is not valid, name should not be empty
+    // Same logic applies to breed, size, and description
+    await assertFails(
+      updateDoc(doc(aliceDb, "dogs/dog"), {
+        name: "",
+        userId: "alice",
+      })
+    );
+
+    // Can update since userId is the same as authenticated user
+    await assertSucceeds(
+      updateDoc(doc(aliceDb, "dogs/dog"), {
         ...dog,
         userId: "alice",
       })
