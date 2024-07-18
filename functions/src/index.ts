@@ -6,7 +6,6 @@ import {initializeApp, getApps} from "firebase-admin/app";
 import dogDataFlow from "./flows/dogDataFlow";
 import matchDogs from "./callables/matchDogs";
 import onMessageCreated from "./triggers/onMessageCreated";
-import getDogs from "./callables/getDogs";
 
 defineSecret("GOOGLE_GENAI_API_KEY");
 
@@ -22,4 +21,4 @@ configureGenkit({
   enableTracingAndMetrics: true,
 });
 
-export {dogDataFlow, matchDogs, getDogs, onMessageCreated};
+export {dogDataFlow, matchDogs, onMessageCreated};
