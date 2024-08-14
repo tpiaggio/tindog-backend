@@ -2,11 +2,15 @@
 
 [![License: MIT][license_badge]][license_link]
 
-Backend project for Tindog, built with [Firebase][firebase_link] using [Genkit][genkit_link] for [Fluttercon Europe][fluttercon_link].
+Backend project for Tindog, built with [Firebase][firebase_link] using [Genkit][genkit_link] for the [Gemini API Developer Competition](https://ai.google.dev/competition).
 
-You can also check out the frontend built with Flutter in its dedicated [GitHub repository][tindog_frontend_repo].
+You can also check out the frontend built with NextJS in its dedicated [GitHub repository](https://github.com/tpiaggio/tindog-frontend)].
 
 ---
+
+## Deployed on Vercel
+
+This web app has been deployed on Vercel, you can check it out [here](https://tindog-frontend-lac.vercel.app/).
 
 ## Getting Started 🚀
 
@@ -88,7 +92,5 @@ npm run test-rules-emulators
 [firebase_emulator_link]: https://firebase.google.com/docs/genkit/firebase#developing_using_firebase_local_emulator_suite
 [genkit_link]: https://firebase.google.com/docs/genkit
 [genkit_firebase_link]: https://firebase.google.com/docs/genkit/firebase
-[fluttercon_link]: https://fluttercon.dev/
 [license_badge]: https://img.shields.io/badge/license-MIT-blue.svg
 [license_link]: https://opensource.org/licenses/MIT
-[tindog_frontend_repo]: https://github.com/3ettilina/tindog
